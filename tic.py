@@ -550,7 +550,7 @@ piece_7 = f"""
 """
 piece_8 = f"""
     <use href="#punk_main" fill=[color] transform="translate(36 64)" />
-    <use href="#punk_fill" transform="translate(38 64)"/>
+    <use href="#punk_fill" transform="translate(36 64)"/>
 """
 piece_9 = f"""
     <use href="#punk_main" fill=[color] transform="translate(64 64)" />
