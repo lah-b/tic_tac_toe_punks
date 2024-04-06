@@ -1,25 +1,4 @@
-import random
-import datetime
-colors = ['"#0B24FB"', '"#29FD2E",' '"#32FDFC"', '"#FB2FFC"', '"#FCFD45"', '"#FF0000"']
 
-def get_random_color():
-    return random.choice(colors)
-
-random_color_1 = get_random_color()
-colors.remove(random_color_1)
-
-random_color_2 = get_random_color()
-colors.remove(random_color_2)
-
-board_color = '"#D9D9D9"'
-board_string = f"""    
-    <line x1="34" y1="8" x2="34" y2="90" stroke={board_color} stroke-dasharray="1" />
-    <line x1="62" y1="8" x2="62" y2="90" stroke={board_color} stroke-dasharray="1" />
-    <line x1="8" y1="34" x2="90" y2="34" stroke={board_color} stroke-dasharray="1" />
-    <line x1="8" y1="62" x2="90" y2="62" stroke={board_color} stroke-dasharray="1" />
-
-    """
-punk_string = f"""
 <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect width="100%" height="100%" transform="translate(0.5 0.5)" fill="black" />
     <defs>
@@ -517,119 +496,33 @@ punk_string = f"""
         </g>
     </defs>
 
-"""
-punk_string += board_string
-end_string = """
-</svg>
-"""
-piece_1 = f"""
-    <use href="#punk_main" fill=[color] transform="translate(8 8)" />
+    
+    <line x1="34" y1="8" x2="34" y2="90" stroke="#D9D9D9" stroke-dasharray="1" />
+    <line x1="62" y1="8" x2="62" y2="90" stroke="#D9D9D9" stroke-dasharray="1" />
+    <line x1="8" y1="34" x2="90" y2="34" stroke="#D9D9D9" stroke-dasharray="1" />
+    <line x1="8" y1="62" x2="90" y2="62" stroke="#D9D9D9" stroke-dasharray="1" />
+
+    
+    <use href="#punk_main" fill="#0B24FB" transform="translate(8 8)" />
     <use href="#punk_fill" transform="translate(8 8)"/>
-"""
 
-piece_2 = f"""
-    <use href="#punk_main" fill=[color] transform="translate(36 8)" />
-    <use href="#punk_fill" transform="translate(36 8)"/>
-"""
-
-piece_3 = f"""
-    <use href="#punk_main" fill=[color] transform="translate(64 8)" />
-    <use href="#punk_fill" transform="translate(64 8)"/>
-"""
-piece_4 = f"""
-    <use href="#punk_main" fill=[color] transform="translate(8 36)" />
+    <use href="#punk_main" fill="#FF0000" transform="translate(8 36)" />
     <use href="#punk_fill" transform="translate(8 36)"/>
-"""
 
-piece_5 = f"""
-    <use href="#punk_main" fill=[color] transform="translate(36 36)" />
+    <use href="#punk_main" fill="#0B24FB" transform="translate(36 36)" />
     <use href="#punk_fill" transform="translate(36 36) "/>
-"""
 
-piece_6 = f"""
-    <use href="#punk_main" fill=[color] transform="translate(64 36)" />
+    <use href="#punk_main" fill="#FF0000" transform="translate(36 8)" />
+    <use href="#punk_fill" transform="translate(36 8)"/>
+
+    <use href="#punk_main" fill="#0B24FB" transform="translate(64 36)" />
     <use href="#punk_fill" transform="translate(64 36)"/>  
-"""
-piece_7 = f"""
-      <use href="#punk_main" fill=[color] transform="translate(8 64)" />
+
+      <use href="#punk_main" fill="#FF0000" transform="translate(8 64)" />
     <use href="#punk_fill" transform="translate(8 64)"/>
-"""
-piece_8 = f"""
-    <use href="#punk_main" fill=[color] transform="translate(36 64)" />
-    <use href="#punk_fill" transform="translate(36 64)"/>
-"""
-piece_9 = f"""
-    <use href="#punk_main" fill=[color] transform="translate(64 64)" />
+
+    <use href="#punk_main" fill="#0B24FB" transform="translate(64 64)" />
     <use href="#punk_fill" transform="translate(64 64)"/>
-"""
 
-punk_pieces = [piece_1, piece_2, piece_3, piece_4, piece_5, piece_6, piece_7, piece_8, piece_9]
+</svg>
 
-def replace_color(string, new_color):
-    return string.replace("[color]", new_color)
-
-def check_win(board, player):
-    # Check rows
-    for i in range(0, 9, 3):
-        if board[i] == board[i+1] == board[i+2] == player:
-            return True
-    # Check columns
-    for i in range(3):
-        if board[i] == board[i+3] == board[i+6] == player:
-            return True
-    # Check diagonals
-    if board[0] == board[4] == board[8] == player:
-        return True
-    if board[2] == board[4] == board[6] == player:
-        return True
-    return False
-
-def play_game():
-    global punk_string
-    board = [' '] * 9
-    player1 = 'X'
-    player2 = 'O'
-    current_player = player1
-    colors = {
-        player1: random_color_1,
-        player2: random_color_2
-    }
-    while True:
-
-
-        # Player makes a move
-        while True:
-            move = random.randint(0, 8)
-            if board[move] == ' ':
-                piece_string = replace_color(punk_pieces[move], colors[current_player])
-                punk_string += piece_string
-                board[move] = current_player
-                break
-
-
-        # Check for a winner
-        if check_win(board, current_player):
-
-            return
-
-        # Check for a tie
-        if ' ' not in board:
-
-            return
-
-        # Switch to the other player
-        if current_player == player1:
-            current_player = player2
-        else:
-            current_player = player1
-
-if __name__ == "__main__":
-    play_game()
-
-    punk_string += (end_string)
-    current_time = datetime.datetime.now().strftime("%H_%M_%S")
-    file_name = f"{current_time}.svg"
-    with open(file_name, 'w') as file:
-        # Use the print function with the file parameter to write to the file
-        print(punk_string, file=file)
-    print(f"SVG written to {file_name}")
