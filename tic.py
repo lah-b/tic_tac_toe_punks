@@ -1,6 +1,6 @@
 import random
 import datetime
-colors = ["#0B24FB", "#29FD2E", "#32FDFC", "#FB2FFC", "#FCFD45", "#FF0000"]
+colors = ['"#0B24FB"', '"#29FD2E",' '"#32FDFC"', '"#FB2FFC"', '"#FCFD45"', '"#FF0000"']
 
 def get_random_color():
     return random.choice(colors)
@@ -9,7 +9,15 @@ random_color_1 = get_random_color()
 colors.remove(random_color_1)
 
 random_color_2 = get_random_color()
+colors.remove(random_color_2)
 
+board_color = '"#D9D9D9"'
+board_string = f"""    
+    <rect x="33.5" y="8" width="1" height="80" fill={board_color}/>
+    <rect x="61.5" y="8" width="1" height="80" fill={board_color}/>
+    <rect x="8" y="33.5" width="80" height="1" fill={board_color}/>
+    <rect x="8" y="61.5" width="80" height="1" fill={board_color}/>
+    """
 punk_string = f"""
 <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect width="100%" height="100%" transform="translate(0.5 0.5)" fill="black" />
@@ -507,12 +515,9 @@ punk_string = f"""
             <rect x="36.5" y="48.5" width="3" height="3" fill="black" />
         </g>
     </defs>
-    <rect x="33.5" y="8" width="1" height="80" fill="gray"/>
-    <rect x="61.5" y="8" width="1" height="80" fill="gray"/>
-    <rect x="8" y="33.5" width="80" height="1" fill="gray"/>
-    <rect x="8" y="61.5" width="80" height="1" fill="gray"/>
-"""
 
+"""
+punk_string += board_string
 end_string = """
 </svg>
 """
